@@ -1,0 +1,23 @@
+# A public service for datanodes
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hdfs.fullname" . }}-datanode-public
+  labels:
+    app.kubernetes.io/name: {{ include "hdfs.name" . }}
+    app.kubernetes.io/component: datanode
+    {{- include "hdfs.labels" . | nindent 4 }}
+spec:
+  ports:
+    - name: webhdfs
+      port: 50075
+    - name: data
+      port: 50010
+  externalIPs:
+    - {{ .Values.dataNode.externalIp }}
+  publishNotReadyAddresses: true
+  selector:
+    app.kubernetes.io/name: {{ include "hdfs.name" . }}
+    app.kubernetes.io/component: datanode
+    app.kubernetes.io/instance: {{ .Release.Name }}
+

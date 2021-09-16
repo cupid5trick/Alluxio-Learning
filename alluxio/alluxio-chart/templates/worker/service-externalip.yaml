@@ -1,0 +1,34 @@
+{{- $release := .Release }}
+{{- $name := include "alluxio.name" . }}
+{{- $fullName := include "alluxio.fullname" . }}
+{{- $chart := include "alluxio.chart" . }}
+{{- $externalIp := .Values.worker.externalIP }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $fullName }}-worker-public
+  labels:
+    app: {{ $name }}
+    chart: {{ $chart }}
+    release: {{ $release.Name }}
+    heritage: {{ $release.Service }}
+    role: alluxio-worker
+spec:
+  ports:
+    - port: 29999
+      name: rpc
+    - port: 30000
+      name: web
+    - port: 30001
+      name: job-rpc
+    - port: 30002
+      name: job-data
+    - port: 30003
+      name: job-web
+  externalIPs:
+    - {{ $externalIp }}
+  publishNotReadyAddresses: True
+  selector:
+    role: alluxio-worker
+    app: {{ $name }}
+    release: {{ $release.Name }}

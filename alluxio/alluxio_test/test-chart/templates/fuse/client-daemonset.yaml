@@ -1,0 +1,102 @@
+#
+# The Alluxio Open Foundation licenses this work under the Apache License, version 2.0
+# (the "License"). You may not use this work except in compliance with the License, which is
+# available at www.apache.org/licenses/LICENSE-2.0
+#
+# This software is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied, as more fully set forth in the License.
+#
+# See the NOTICE file distributed with this work for information regarding copyright ownership.
+#
+
+{{ if .Values.fuseClient.enabled -}}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "alluxio.fullname" . }}-fuse-client
+  labels:
+    app: {{ template "alluxio.name" . }}
+    chart: {{ template "alluxio.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    role: alluxio-fuse-client
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "alluxio.name" . }}
+      chart: {{ template "alluxio.chart" . }}
+      release: {{ .Release.Name }}
+      heritage: {{ .Release.Service }}
+      role: alluxio-fuse-client
+  template:
+    metadata:
+      labels:
+        app: {{ template "alluxio.name" . }}
+        chart: {{ template "alluxio.chart" . }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+        role: alluxio-fuse-client
+    {{- if or .Values.fuse.podAnnotations .Values.metrics.enabled }}
+      annotations:
+      {{- with .Values.fuse.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.metrics.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- end }}
+    spec:
+      nodeSelector:
+      {{- if .Values.fuseClient.nodeSelector }}
+{{ toYaml .Values.fuseClient.nodeSelector | trim | indent 8  }}
+      {{- else if .Values.nodeSelector }}
+{{ toYaml .Values.nodeSelector | trim | indent 8  }}
+      {{- end }}
+      securityContext:
+        runAsUser: {{ .Values.fuse.user }}
+        runAsGroup: {{ .Values.fuse.group }}
+        fsGroup: {{ .Values.fuse.fsGroup }}
+      containers:
+        - name: alluxio-fuse-client
+          image: {{ print .Values.fuseClient.image ":" .Values.fuseClient.imageTag }}
+          resources:
+            {{- if .Values.fuseClient.resources.limits }}
+            limits:
+              cpu: {{ .Values.fuseClient.resources.limits.cpu }}
+              memory: {{ .Values.fuseClient.resources.limits.memory }}
+            {{- end }}
+            {{- if .Values.fuseClient.resources.requests }}
+            requests:
+              cpu: {{ .Values.fuseClient.resources.requests.cpu }}
+              memory: {{ .Values.fuseClient.resources.requests.memory }}
+            {{- end }}
+          {{- if .Values.fuseClient.env }}
+          env:
+            {{- range $key, $value := .Values.fuseClient.env }}
+            - name: "{{ $key }}"
+              value: "{{ $value }}"
+            {{- end }}
+          {{- end }}
+          command: ["/usr/sbin/sshd", "-D"]
+          {{- if .Values.fuse.args }}
+          args:
+{{ toYaml .Values.fuseClient.args | trim | indent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: alluxio-fuse-mount
+              mountPath: {{ .Values.fuse.mountPath }}
+            - name: workload-output-dir
+              mountPath: {{ .Values.fuseClient.dataDir.mountPath }}
+      restartPolicy: Always
+      volumes:
+        - name: alluxio-fuse-mount
+          hostPath:
+            path: {{ .Values.fuse.mountPath }}
+            type: Directory
+        {{- if .Values.fuseClient.dataDir }}
+        - name: workload-output-dir
+          hostPath:
+            path: {{ .Values.fuseClient.dataDir.hostPath }}
+            type: DirectoryOrCreate
+        {{- end }}
+{{- end }}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="907d1f99-d1bc-466f-8dec-c401865e5a7a" name="alluxio-hdfs">
+        <fileTransfer rootFolder="/home/guo/software" accessType="SFTP" host="192.168.43.134" port="22" sshConfigId="ba733891-499d-4270-8d67-1e85f7cb42ed" sshConfig="guo@192.168.43.134:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="d0a0b46e-a1ef-4b6d-8212-18a5548f93bd" name="k8s-alluxio">
+        <fileTransfer rootFolder="/home/guo/software/" accessType="SFTP" host="192.168.43.135" port="22" sshConfigId="9eeb2ab8-eeb2-4865-af83-c5924e304ede" sshConfig="guo@192.168.43.135:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

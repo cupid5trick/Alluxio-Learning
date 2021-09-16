@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: alluxio-hadoop-native-lib-pvc
+  labels:
+    type: local
+    app: alluxio
+    component: alluxio-java-library
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi
+  volumeName: alluxio-hadoop-native-lib
+
+  selector:
+    matchLabels:
+      type: local
+      app: alluxio
+      component: alluxio-java-library

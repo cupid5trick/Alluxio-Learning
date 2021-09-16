@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="alluxio-hdfs" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="alluxio-hdfs">
+        <serverdata>
+          <mappings>
+            <mapping deploy="." local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/hdfs/gradiant-hdfs" local="$PROJECT_DIR$/hdfs/gradiant-hdfs" web="/hdfs/gradiant-hdfs" />
+            <mapping deploy="/hdfs/helm-hadoop/hadoop" local="$PROJECT_DIR$/hdfs/helm-hadoop" web="/hdfs/helm-hadoop/hadoop" />
+            <mapping deploy="/hdfs/k8s-hdfs-conf" local="$PROJECT_DIR$/hdfs/conf-k8s" web="/hdfs/k8s-hdfs-conf" />
+            <mapping deploy="/k8s" local="$PROJECT_DIR$/k8s" web="/k8s" />
+            <mapping deploy="/hdfs" local="$PROJECT_DIR$/hdfs" web="/hdfs" />
+            <mapping deploy="/alluxio" local="$PROJECT_DIR$/alluxio" web="/alluxio" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/k8s/linux-amd64" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="k8s-alluxio">
+        <serverdata>
+          <mappings>
+            <mapping deploy="." local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="alluxio/alluxio-conf" local="$PROJECT_DIR$/alluxio/conf" web="/alluxio/alluxio-conf" />
+            <mapping deploy="alluxio/hdfs-conf" local="$PROJECT_DIR$/alluxio/hdfs-conf" web="/alluxio/hdfs-conf" />
+            <mapping deploy="alluxio" local="$PROJECT_DIR$/alluxio" web="/alluxio" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

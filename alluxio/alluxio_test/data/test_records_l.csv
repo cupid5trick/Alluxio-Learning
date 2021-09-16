@@ -1,0 +1,31 @@
+TimeStamp,CaseName,Duration,Size,FileName
+2021-09-03 08:43:56:003,org.example.alluxio_test.SimpleTestCase,303.393000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:48:59:697,org.example.alluxio_test.SimpleTestCase,250.319000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:53:10:122,org.example.alluxio_test.SimpleTestCase,246.086000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:57:16:395,org.example.alluxio_test.SimpleTestCase,253.518000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 09:01:30:107,org.example.alluxio_test.SimpleTestCase,237.292000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 09:05:27:501,org.example.alluxio_test.SimpleTestCase,219.101000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:49:45:603,org.example.alluxio_test.SimpleTestCase,250.194000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:53:55:992,org.example.alluxio_test.SimpleTestCase,246.105000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:58:02:193,org.example.alluxio_test.SimpleTestCase,249.613000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 09:02:11:993,org.example.alluxio_test.SimpleTestCase,220.108000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:43:56:003,org.example.alluxio_test.SimpleTestCase,303.393000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:48:59:697,org.example.alluxio_test.SimpleTestCase,250.319000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:53:10:122,org.example.alluxio_test.SimpleTestCase,246.086000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:57:16:395,org.example.alluxio_test.SimpleTestCase,253.518000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 09:01:30:107,org.example.alluxio_test.SimpleTestCase,237.292000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 09:05:27:501,org.example.alluxio_test.SimpleTestCase,219.101000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:49:45:603,org.example.alluxio_test.SimpleTestCase,250.194000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:53:55:992,org.example.alluxio_test.SimpleTestCase,246.105000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 08:58:02:193,org.example.alluxio_test.SimpleTestCase,249.613000seconds,5.801249GB,giga-6-0.csv
+2021-09-03 09:02:11:993,org.example.alluxio_test.SimpleTestCase,220.108000seconds,5.801249GB,giga-6-0.csv
+0m0.000s
+0m0.002s
+0m0.000s
+0m0.000s
+0m0.002s
+0m0.003s
+0m0.002s
+0m0.000s
+0m0.003s
+0m0.002s

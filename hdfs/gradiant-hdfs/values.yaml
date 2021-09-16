@@ -1,0 +1,124 @@
+# The base hadoop image to use for all components.
+# See this repo for image build details: https://github.com/Comcast/kube-yarn/tree/master/image
+image:
+  repository: gradiant/hdfs
+  tag: 2.7.7
+  pullPolicy: IfNotPresent
+
+# Select antiAffinity as either hard or soft, default is 'soft'
+# 'hard' is sugested for production setup
+antiAffinity: "hard"
+# 限制HDFS只能运行在alluxio-hdfs这台机器上
+nodeSelectorHostname: alluxio-hdfs
+
+conf:
+  coreSite:
+    hadoop.tmp.dir: /dfs
+    # fs.trash.interval: "10080"  # trash auto purge in minutes
+  hdfsSite:
+    # 默认HDFS上存储3个文件副本
+    dfs.replication: 3  # when changing this value ensure that dataNode.replicas is equal or higher than this value
+    # 关闭HDFS权限检查
+    dfs.permissions.enabled: false
+    dfs.permissions.superusergroup: hadoop
+    # 设置较小的块大小
+    dfs.blocksize: 16m
+    # datanode使用主机名
+    dfs.client.use.datanode.hostname: true
+    # 在节点数很小的集群上，设置有datanode不可用时的策略
+    dfs.client.block.write.replace-datanode-on-failure.enable: true
+    dfs.client.block.write.replace-datanode-on-failure.policy: DEFAULT
+    dfs.client.block.write.replace-datanode-on-failure.best-effort: true
+
+#    dfs.cluster.administrators: '*'
+#    dfs.namenode.acls.enabled: true
+#    dfs.namenode.posix.acl.inheritance.enabled: true
+    # dfs.datanode.du.reserved: "4294967296"  # number of bytes to reserve on disk to block hitting disk full, must be quoted for large numbers, because of gotemplate converting large numbers to float with scientific notation
+
+# httpsfs service
+httpfs:
+  port: 14000
+  adminPort: 14001
+
+nameNode:
+  pdbMinAvailable: 1
+  port: 8020
+  # 通过externalIP暴露出namenode服务
+  externalIp:
+    192.168.43.134
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "10m"
+    limits:
+      memory: "2048Mi"
+      cpu: "1000m"
+
+dataNode:
+  replicas: 3  # ensure this value is higher or equal to 'conf.hdfsSite.dfs.replication'
+  pdbMinAvailable: 3  # ensure to set this value before deploying
+  # 通过externalIP暴露出datanode服务
+  externalIp:
+    192.168.43.134
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "10m"
+    limits:
+      memory: "2048Mi"
+      cpu: "1000m"
+
+ingress:
+  nameNode:
+    enabled: false
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    labels: {}
+    path: /
+    hosts:
+    - "hdfs-namenode.local"
+  dataNode:
+    enabled: false
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    labels: {}
+    path: /
+    hosts:
+    - "hdfs-datanode.local"
+  httpfs:
+    enabled: false
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    labels: {}
+    path: /
+    hosts:
+    - "httpfs.local"
+
+persistence:
+  nameNode:
+    enabled: true
+    storageClass: standard
+    accessMode: ReadWriteOnce
+    size: 10Gi
+  dataNode:
+    enabled: true
+    storageClass: standard
+    accessMode: ReadWriteOnce
+    size: 20Gi
+
+## ------------------------------------------------------
+## Monitoring HDFS-NameNode
+## ------------------------------------------------------
+
+## Prometheus Exporter Configuration
+## ref: https://prometheus.io/docs/instrumenting/exporters/
+prometheus:
+  ## Exporter Configuration
+  ## ref: https://github.com/marcelmay/hadoop-hdfs-fsimage-exporter
+  exporter:
+    enabled: false
+    image: marcelmay/hadoop-hdfs-fsimage-exporter:1.2
+    port: 5556
