@@ -37,5 +37,5 @@ buildNumber.properties
 hs_err_pid*
 
 ### This project
-*/data
-*/fig
+data/
+fig/

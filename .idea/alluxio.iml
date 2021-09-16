@@ -4,6 +4,10 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/alluxio/alluxio_test/target" />
+      <excludeFolder url="file://$MODULE_DIR$/alluxio/alluxio_test/data" />
+      <excludeFolder url="file://$MODULE_DIR$/alluxio/fig" />
+      <excludeFolder url="file://$MODULE_DIR$/hdfs/fig" />
+      <excludeFolder url="file://$MODULE_DIR$/k8s/fig" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
